@@ -1,20 +1,19 @@
 #include <iostream>
+#include <sstream>
+#include <vector>
+
 using namespace std;
 
 int main(){
     int total, x1, y1, x2, y2, x3, y3;
-    char c;
+    char comma;
+    freopen("triangles.txt", "r", stdin);
     while (true) {
         // making sure algorithm stops when there is no more input
-        if (!(cin >> x1)){
+        if (!(cin >> x1 >> comma >> y1 >> comma >> x2 >> comma >> y2 >> comma >> x3 >> comma >> y3)) {
             break;
         }
 
-        cin >> y1 >> c;
-        cin >> x2 >> c;
-        cin >> y2 >> c;
-        cin >> x3 >> c;
-        cin >> y3 >> c;
         // the area of the original triangle, by shoelace formula (https://en.wikipedia.org/wiki/Shoelace_formula)
         // if we calculate the area of the three triangles formed by 2 vertices and (0,0) using shoelace formula, we obtain:
         int og = abs(x1*y2 + x2*y3 + x3*y1 - x2*y1 - x3*y2 - x1*y3);
