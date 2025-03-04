@@ -1,5 +1,5 @@
 #include <iostream>
-#include <sstream>
+#include <fstream>
 #include <vector>
 #include <cmath>
 
@@ -14,7 +14,12 @@ int main() {
     int total = 0;
     int x1, y1, x2, y2, x3, y3;
     char comma;
-    freopen("triangles.txt", "r", stdin);
+    ifstream infile("Problem102\\triangles.txt");
+    if (!infile) {
+        cerr << "Unable to open file";
+        return 1;
+    }
+    cin.rdbuf(infile.rdbuf());
 
     while (true) {
         // making sure algorithm stops when there is no more input
