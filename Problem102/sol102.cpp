@@ -1,32 +1,40 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
+#include <cmath>
 
 using namespace std;
 
-int main(){
-    int total, x1, y1, x2, y2, x3, y3;
+// Calculates the area of a triangle by its cartesian coordinates by the use of [shoelace formula](https://en.wikipedia.org/wiki/Shoelace_formula)
+int shoelace(int x1, int y1, int x2, int y2, int x3, int y3) {
+    return abs(x1 * y2 + x2 * y3 + x3 * y1 - x2 * y1 - x3 * y2 - x1 * y3);
+}
+
+int main() {
+    int total = 0;
+    int x1, y1, x2, y2, x3, y3;
     char comma;
     freopen("triangles.txt", "r", stdin);
+
     while (true) {
         // making sure algorithm stops when there is no more input
         if (!(cin >> x1 >> comma >> y1 >> comma >> x2 >> comma >> y2 >> comma >> x3 >> comma >> y3)) {
             break;
         }
 
-        // the area of the original triangle, by shoelace formula (https://en.wikipedia.org/wiki/Shoelace_formula)
-        // if we calculate the area of the three triangles formed by 2 vertices and (0,0) using shoelace formula, we obtain:
-        int og = abs(x1*y2 + x2*y3 + x3*y1 - x2*y1 - x3*y2 - x1*y3);
-        // area of the three triangles formed by 2 vertices and (0,0), simplifying the shoelace formula
-        int a1 = abs(x1*y2 - x2*y1);
-        int a2 = abs(x2*y3 - x3*y2);
-        int a3 = abs(x3*y1 - x1*y3);
+        // Calculates the area of the original triangle
+        int og = shoelace(x1, y1, x2, y2, x3, y3);
+        // Calculates the area of the three triangles formed by the origin and two vertices of the original triangle
+        int a1 = shoelace(0, 0, x1, y1, x2, y2);
+        int a2 = shoelace(0, 0, x2, y2, x3, y3);
+        int a3 = shoelace(0, 0, x3, y3, x1, y1);
 
-        // if the sum of the areas of the three triangles is equal to the area of the original triangle, then the point is inside the triangle
-        if (og == (a1 + a2 + a3)){
+        // if the sum of the areas of the three triangles is equal to the area of the original triangle, then (0,0) is inside the triangle
+        if (og == (a1 + a2 + a3)) {
             total++;
         }
     }
+
     cout << total;
     return 0;
 }
